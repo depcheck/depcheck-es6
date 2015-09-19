@@ -101,6 +101,15 @@ describe("depcheck", function () {
     });
   });
 
+  it("should report bad javascript", function testBadJS(done) {
+    var absolutePath = path.resolve("test/fake_modules/bad_js");
+
+    depcheck(absolutePath, {  }, function checked(unused) {
+      assert.notEqual(unused.invalidFiles, {});
+      done();
+    });
+  });
+
   it("should recognize nested requires", function testNested(done) {
     var absolutePath = path.resolve("test/fake_modules/nested");
 
