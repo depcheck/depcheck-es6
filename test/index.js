@@ -96,16 +96,7 @@ describe("depcheck", function () {
 
     depcheck(absolutePath, {  }, function checked(unused) {
       assert.equal(unused.dependencies.length, 1);
-      //assert.deepEqual(Object.keys(unused.invalidFiles).length, 2);
-      done();
-    });
-  });
-
-  it("should report bad javascript", function testBadJS(done) {
-    var absolutePath = path.resolve("test/fake_modules/bad_js");
-
-    depcheck(absolutePath, {  }, function checked(unused) {
-      assert.notEqual(unused.invalidFiles, {});
+      assert.deepEqual(Object.keys(unused.invalidFiles).length, 2);
       done();
     });
   });
