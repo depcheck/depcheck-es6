@@ -96,7 +96,16 @@ describe("depcheck", function () {
 
     depcheck(absolutePath, {  }, function checked(unused) {
       assert.equal(unused.dependencies.length, 1);
-      //assert.deepEqual(Object.keys(unused.invalidFiles).length, 2);
+      assert.deepEqual(Object.keys(unused.invalidFiles).length, 2);
+      for (var k in unused.invalidFiles) {
+        if (unused.invalidFiles.hasOwnProperty(k)) {
+          var err = unused.invalidFiles[k];
+          assert.deepEqual(err.pos, 180);
+          assert.deepEqual(err.loc.line, 8);
+          assert.deepEqual(err.loc.column, 0);
+          assert.deepEqual(err.raisedAt, 180);
+        }
+      }
       done();
     });
   });
