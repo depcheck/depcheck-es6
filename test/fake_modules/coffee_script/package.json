@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "tea": "1.2.3",
+    "coffee": "1.2.3"
+  }
+}
