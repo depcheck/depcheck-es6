@@ -12,6 +12,6 @@ import { member } from 'member-import';
 import { foobar as barfoo } from 'member-alias-import';
 import { foo, bar } from 'multiple-member-import';
 import { a, b as c } from 'mixed-member-alias-import';
-import d, { e } from 'mixed-name-memeber-import';
+import d, { e } from 'mixed-name-member-import';
 import h, * as i from 'mixed-default-star-import';
 import j from 'default-member-import';

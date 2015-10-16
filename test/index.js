@@ -40,19 +40,6 @@ describe('depcheck', () => {
       }));
   });
 
-  it('should ignore bad javascript', () =>
-    check('bad_js', {}).then(unused => {
-      unused.dependencies.should.deepEqual(['optimist']);
-
-      const invalidFiles = Object.keys(unused.invalidFiles);
-      invalidFiles.should.have.length(1);
-      invalidFiles[0].should.endWith(
-        path.join('/test/fake_modules/bad_js/index.js'));
-
-      const error = unused.invalidFiles[invalidFiles[0]];
-      error.should.be.instanceof(SyntaxError);
-    }));
-
   it('should allow dynamic package metadata', () =>
     check('bad', {
       'package': {

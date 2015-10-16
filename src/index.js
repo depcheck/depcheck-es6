@@ -34,7 +34,10 @@ const defaultOptions = {
   ],
   parsers: {
     '*.js': availableParsers.es6,
-    '*.jsx': availableParsers.jsx,
+    '*.jsx': availableParsers.es6,
+    '*.coffee': availableParsers.coffee,
+    '*.litcoffee': availableParsers.coffee,
+    '*.coffee.md': availableParsers.coffee,
   },
   detectors: [
     availableDetectors.importDeclaration,

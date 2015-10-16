@@ -1,6 +1,15 @@
 {
   "dependencies": {
     "dont-find-me": "~0.0.1",
-    "find-me": "^0.1.0"
+    "find-me": "^0.1.0",
+    "name-import": "*",
+    "star-import": "*",
+    "member-import": "*",
+    "member-alias-import": "*",
+    "multiple-member-import": "*",
+    "mixed-member-alias-import": "*",
+    "mixed-name-member-import": "*",
+    "mixed-default-star-import": "*",
+    "default-member-import": "*"
   }
 }
