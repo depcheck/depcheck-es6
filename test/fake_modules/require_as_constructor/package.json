@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "constructor": "0.0.1",
+    "require-as-constructor": "0.0.2"
+  }
+}

@@ -1,5 +1,10 @@
+function isValidType(type) {
+  return type === 'CallExpression'
+      || type === 'NewExpression';
+}
+
 export default node =>
-  node.type === 'CallExpression' &&
+  isValidType(node.type) &&
   node.callee &&
   node.callee.type === 'Identifier' &&
   node.callee.name === 'require' &&
