@@ -201,6 +201,16 @@
     }
   },
   {
+    "name": "support indentify require as constructor",
+    "module": "require_as_constructor",
+    "options": {
+    },
+    "expected": {
+      "dependencies": ["require-as-constructor"],
+      "devDependencies": []
+    }
+  },
+  {
     "name": "ignore require number",
     "module": "ignore_number",
     "options": {
