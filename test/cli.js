@@ -22,7 +22,7 @@ function makeArgv(module, options) {
   }
 
   if (options.ignoreMatches) {
-    argv.push('--ignores=' + options.ignoreMatches.join(','));
+    argv.push('--ignore=' + options.ignoreMatches.join(','));
   }
 
   if (options.ignoreDirs) {
