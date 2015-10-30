@@ -61,9 +61,10 @@ export default function cli(args, env, log, error, exit) {
     .describe('specials', 'Comma separated special parser list')
     .describe('help', 'Show this help message');
 
+  let ignore = opt.argv.ignore || '';
   if (opt.argv.ignores) {
     deprecate('--ignores is deprecated, use --ignore instead. (strip out the tailing `s`)');
-    opt.argv.ignore = `${opt.argv.ignore},${opt.argv.ignores}`;
+    ignore = `${opt.argv.ignore},${opt.argv.ignores}`;
   }
 
   if (opt.argv.help) {
@@ -87,7 +88,7 @@ export default function cli(args, env, log, error, exit) {
     .then(() => depcheck(rootDir, {
       withoutDev: !opt.argv.dev,
       ignoreBinPackage: opt.argv.ignoreBinPackage,
-      ignoreMatches: (opt.argv.ignores || '').split(','),
+      ignoreMatches: (ignore || '').split(','),
       ignoreDirs: (opt.argv.ignoreDirs || '').split(','),
       parsers: getParsers(opt.argv.parsers),
       detectors: getDetectors(opt.argv.detectors),
