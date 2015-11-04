@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import yargs from 'yargs';
+import deprecate from 'deprecate';
 import depcheck from './index';
 import output from './utils/output';
 import webReport from './utils/web-report';
@@ -50,7 +51,8 @@ export default function cli(args, env, log, error, exit) {
     .describe('dev', 'Check on devDependecies')
     .describe('ignore-bin-package', 'Ignore package with bin entry')
     .describe('json', 'Output results to JSON')
-    .describe('ignores', 'Comma separated package list to ignore')
+    .describe('ignore', 'Comma separated package list to ignore')
+    .describe('ignores', 'Deprecated, use `ignore` argument instead')
     .describe('ignore-dirs', 'Comma separated folder names to ignore')
     .describe('web-report', 'Generate web report with depcheck web service')
     .describe('web-service', 'Specify depcheck web service URL')
@@ -58,6 +60,12 @@ export default function cli(args, env, log, error, exit) {
     .describe('detectors', 'Comma separated detector list')
     .describe('specials', 'Comma separated special parser list')
     .describe('help', 'Show this help message');
+
+  let ignore = opt.argv.ignore || '';
+  if (opt.argv.ignores) {
+    deprecate('--ignores is deprecated, use --ignore instead. (strip out the tailing `s`)');
+    ignore = `${opt.argv.ignore},${opt.argv.ignores}`;
+  }
 
   if (opt.argv.help) {
     log(opt.help());
@@ -80,7 +88,7 @@ export default function cli(args, env, log, error, exit) {
     .then(() => depcheck(rootDir, {
       withoutDev: !opt.argv.dev,
       ignoreBinPackage: opt.argv.ignoreBinPackage,
-      ignoreMatches: (opt.argv.ignores || '').split(','),
+      ignoreMatches: (ignore || '').split(','),
       ignoreDirs: (opt.argv.ignoreDirs || '').split(','),
       parsers: getParsers(opt.argv.parsers),
       detectors: getDetectors(opt.argv.detectors),
