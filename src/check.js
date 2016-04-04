@@ -111,12 +111,14 @@ function getDependencies(dir, filename, deps, parser, detectors) {
       .value();
 
     const discover = lodash.partial(discoverPropertyDep, dir, deps);
+    const discoverDedupDeps = lodash.partial(discover, 'dependencies');
     const discoverPeerDeps = lodash.partial(discover, 'peerDependencies');
     const discoverOptionalDeps = lodash.partial(discover, 'optionalDependencies');
+    const dedupDeps = lodash(dependencies).map(discoverDedupDeps).flatten().value();
     const peerDeps = lodash(dependencies).map(discoverPeerDeps).flatten().value();
     const optionalDeps = lodash(dependencies).map(discoverOptionalDeps).flatten().value();
 
-    return dependencies.concat(peerDeps).concat(optionalDeps);
+    return dependencies.concat(dedupDeps).concat(peerDeps).concat(optionalDeps);
   });
 }
 
