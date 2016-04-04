@@ -511,4 +511,21 @@ export default [
       },
     },
   },
+  {
+    name: 'recognize the deduplicated dependencies',
+    module: 'dedup',
+    options: {
+    },
+    expected: {
+      dependencies: ['unused-dedup-dep'],
+      devDependencies: [],
+      missing: {},
+      using: {
+        // TODO the using table of dedup dependencies is not right.
+        'dedup-dep': ['index.js'],
+        'dep-1': ['index.js'],
+        'dep-2': ['index.js'],
+      },
+    },
+  },
 ];

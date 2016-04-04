@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "dedup-dep": "0.0.1",
+    "dep-1": "latest",
+    "dep-2": "latest",
+    "unused-dedup-dep": "latest"
+  }
+}
