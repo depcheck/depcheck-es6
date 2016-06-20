@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "download": "^5.0.2",
+    "extract-zip": "^1.5.0"
+  }
+}
