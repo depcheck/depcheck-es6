@@ -5,6 +5,7 @@ import fs from 'fs';
 import path from 'path';
 import download from 'download';
 import extract from 'extract-zip';
+import childProcess from 'child_process';
 
 function access(filePath) {
   return new Promise((resolve) =>
@@ -39,6 +40,14 @@ function unzip(dir, filename) {
   });
 }
 
+function exec(script, env) {
+  return new Promise((resolve, reject) =>
+    childProcess.exec(script, { env }, (error, stdout, stderr) =>
+      (error ? reject(error) : resolve({ stdout, stderr }))
+    )
+  );
+}
+
 async function getNode(dir, version) {
   const arch = os.arch();
   const filename = `node-v${version}-win-${arch}.zip`;
@@ -60,17 +69,28 @@ async function getNode(dir, version) {
   return node;
 }
 
-async function run(dir, version) {
+async function run(dir, version, scripts) {
   const node = await getNode(dir, version);
-  console.log(`[Runner][${version}] Got node: ${node}`);
+  const nodeDir = path.dirname(node);
+  const env = Object.assign({ PATH: `${nodeDir};${process.env.PATH}` }, process.env);
+  console.log(`[Runner][${version}] Node path is added to environment: ${nodeDir}`);
+
+  for (const script of scripts) {
+    console.log(`[Runner][${version}][Script] ${script}`);
+    const { stdout, stderr } = await exec(script, env);
+    console.log(`[Runner][${version}][Stdout] ${stdout.trim()}`);
+    console.log(`[Runner][${version}][Stderr] ${stderr.trim()}`);
+  }
+
+  console.log(`[Runner][${version}] Scripts completed.`);
 }
 
-async function main(dir, versions) {
+async function main(dir, versions, scripts) {
   try {
     console.log(`[Runner] Start runner under ${dir}, with versions: ${versions}`);
     const rootDir = path.resolve(dir, 'node_bins');
     await mkdir(rootDir);
-    await Promise.all(versions.map(v => run(rootDir, v)));
+    await Promise.all(versions.map(v => run(rootDir, v, scripts)));
     console.log('[Runner] All tasks are completed successfully!');
   } catch (error) {
     console.error('[Runner] Whoops! Get into trouble. :(');
@@ -82,5 +102,9 @@ main(
   process.cwd(),
   [
     '6.2.2',
+  ],
+  [
+    'node --version',
+    'npm --version',
   ],
 );
